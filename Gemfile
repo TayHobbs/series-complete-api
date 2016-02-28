@@ -11,7 +11,6 @@ gem 'puma'
 # gem 'jbuilder', '~> 2.0'
 # Action Cable dependencies for the Redis adapter
 gem 'redis', '~> 3.0'
-
 gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
@@ -19,6 +18,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
+gem 'active_model_serializers', '~> 0.10.0.rc4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
