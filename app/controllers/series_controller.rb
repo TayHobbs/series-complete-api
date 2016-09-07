@@ -21,6 +21,6 @@ class SeriesController < ApplicationController
 
   private
     def series_params
-      params.require(:series).permit(:title, :complete, :installments => [:name, :complete])
+      params.require(:series).permit(:series, :title, :complete, :installments => [:name, :complete])
     end
 end
