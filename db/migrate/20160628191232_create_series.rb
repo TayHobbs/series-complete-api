@@ -4,7 +4,6 @@ class CreateSeries < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :type
       t.string :complete
-      t.references :installments, foreign_key: true
 
       t.timestamps
     end
