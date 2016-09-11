@@ -1,4 +1,9 @@
 class SeriesController < ApplicationController
+  def index
+    @series = Series.all
+    return render json: @series
+  end
+
   def create
     @series = Series.new(series_params.except(:installments))
     if @series.save
