@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe SeriesController, type: :controller do
 
   describe 'GET index' do
-    describe 'returns expected' do
       it 'returns single series' do
         Series.create!({:title => 'Lord of the Rings'})
         get :index
@@ -37,11 +36,9 @@ RSpec.describe SeriesController, type: :controller do
         expect(body).to(eq({'series' => [{'id'=>1, 'title'=>'Lord of the Rings', 'complete'=>false, 'installments'=>[{'id'=>1, 'name'=>'Fellowship', 'complete'=>false, 'series_id'=>1}]}]}))
       end
 
-    end
   end
 
   describe 'POST create' do
-    describe 'with valid params' do
       it 'creates a new series' do
         data = {:series => {:title => 'Lord of the Rings'}}
         expect {
@@ -66,6 +63,5 @@ RSpec.describe SeriesController, type: :controller do
         expect(body['series']['installments'][0]['name']).to(eq('Fellowship'))
       end
 
-    end
   end
 end

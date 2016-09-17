@@ -24,7 +24,6 @@ RSpec.describe UsersController, :type => :controller do
   end
 
   describe 'POST create' do
-    describe 'with valid params' do
       it 'creates a new User' do
         expect {
           post :create, params: {:user => valid_attributes}
@@ -36,7 +35,6 @@ RSpec.describe UsersController, :type => :controller do
         body = JSON.parse(response.body)
         expect(body).to(eq({'user' => {'id'=>1, 'username'=>'Michael', 'email'=>'test@test.com', 'admin'=>'f'}}))
       end
-    end
   end
 
   describe 'PUT update' do
