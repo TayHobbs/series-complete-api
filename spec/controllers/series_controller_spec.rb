@@ -16,7 +16,15 @@ RSpec.describe SeriesController, type: :controller do
         Series.create!({:title => 'Blade Runner', :complete => true})
         get :index
         body = JSON.parse(response.body)
-        expect(body).to(eq({'series' => [{'id'=>1, 'title'=>'Lord of the Rings', 'complete'=>false, 'installments'=>[]}, {'id'=>2, 'title'=>'Blade Runner', 'complete'=>true, 'installments'=>[]}]}))
+        expect(body).to(eq({'series' => [{'id'=>1, 'title'=>'Lord of the Rings', 'complete'=>false, 'installments'=>[]}, {'id'=>2, 'title'=>'Blade Runner', 'complete'=>false, 'installments'=>[]}]}))
+      end
+
+      it 'returns series complete if all installments complete' do
+        series = Series.create!({:title => 'Lord of the Rings', :complete => false})
+        Installment.create!({:name => 'Fellowship', :complete => true, :series => series})
+        get :index
+        body = JSON.parse(response.body)
+        expect(body['series'][0]['complete']).to(eq(true))
       end
 
       it 'returns series and installments' do
