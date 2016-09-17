@@ -5,22 +5,22 @@ RSpec.describe SeriesController, type: :controller do
   describe 'GET index' do
     describe 'returns expected' do
       it 'returns single series' do
-        Series.create!({:title => 'Lord of the Rings', :complete => false})
+        Series.create!({:title => 'Lord of the Rings'})
         get :index
         body = JSON.parse(response.body)
         expect(body).to(eq({'series' => [{'id'=>1, 'title'=>'Lord of the Rings', 'complete'=>false, 'installments'=>[]}]}))
       end
 
       it 'returns many series' do
-        Series.create!({:title => 'Lord of the Rings', :complete => false})
-        Series.create!({:title => 'Blade Runner', :complete => true})
+        Series.create!({:title => 'Lord of the Rings'})
+        Series.create!({:title => 'Blade Runner'})
         get :index
         body = JSON.parse(response.body)
         expect(body).to(eq({'series' => [{'id'=>1, 'title'=>'Lord of the Rings', 'complete'=>false, 'installments'=>[]}, {'id'=>2, 'title'=>'Blade Runner', 'complete'=>false, 'installments'=>[]}]}))
       end
 
       it 'returns series complete if all installments complete' do
-        series = Series.create!({:title => 'Lord of the Rings', :complete => false})
+        series = Series.create!({:title => 'Lord of the Rings'})
         Installment.create!({:name => 'Fellowship', :complete => true, :series => series})
         get :index
         body = JSON.parse(response.body)
@@ -28,7 +28,7 @@ RSpec.describe SeriesController, type: :controller do
       end
 
       it 'returns series and installments' do
-        series = Series.create!({:title => 'Lord of the Rings', :complete => false})
+        series = Series.create!({:title => 'Lord of the Rings'})
         Installment.create!({:name => 'Fellowship', :complete => false, :series => series})
         get :index
         body = JSON.parse(response.body)
@@ -43,21 +43,21 @@ RSpec.describe SeriesController, type: :controller do
   describe 'POST create' do
     describe 'with valid params' do
       it 'creates a new series' do
-        data = {:series => {:title => 'Lord of the Rings', :complete => false}}
+        data = {:series => {:title => 'Lord of the Rings'}}
         expect {
           post :create, params: data
         }.to change(Series, :count).by(1)
       end
 
       it 'returns created series attributes' do
-        data = {:series => {:title => 'Lord of the Rings', :complete => false}}
+        data = {:series => {:title => 'Lord of the Rings'}}
         post :create, params: data
         body = JSON.parse(response.body)
         expect(body).to(eq({'series' => {'id'=>1, 'title'=>'Lord of the Rings', 'complete'=>false, 'installments'=>[]}}))
       end
 
       it 'creates series and nested installments' do
-        data = {:series => {:title => 'Lord of the Rings', :complete => false, :installments => [{:name => 'Fellowship', :complete => false}]}}
+        data = {:series => {:title => 'Lord of the Rings', :installments => [{:name => 'Fellowship', :complete => false}]}}
         post :create, params: data
         body = JSON.parse(response.body)
         expect(Series.count).to eq 1
