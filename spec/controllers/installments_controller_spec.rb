@@ -2,6 +2,24 @@ require 'rails_helper'
 
 RSpec.describe InstallmentsController, type: :controller do
 
+  describe 'POST create' do
+    it 'creates a new installment' do
+      series = Series.create!({:title => 'Lord of the Rings'})
+      data = {:installment => {:name => 'Fellowship', :complete => false, :series_id => series.id}}
+      expect {
+        post :create, params: data
+      }.to change(Installment, :count).by(1)
+    end
+
+    it 'returns created series attributes' do
+      series = Series.create!({:title => 'Lord of the Rings'})
+      data = {:installment => {:name => 'Fellowship', :complete => false, :series_id => series.id}}
+      post :create, params: data
+      body = JSON.parse(response.body)
+      expect(body).to(eq({'installment' => {'id'=>1, 'name'=>'Fellowship', 'complete'=>false, 'series_id'=>1}}))
+    end
+  end
+
   describe 'PATCH update' do
     it 'updates specified record' do
       series = Series.create!({:title => 'Lord of the Rings'})
