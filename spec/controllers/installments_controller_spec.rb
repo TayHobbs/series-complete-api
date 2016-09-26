@@ -16,7 +16,8 @@ RSpec.describe InstallmentsController, type: :controller do
       data = {:installment => {:name => 'Fellowship', :complete => false, :series_id => series.id}}
       post :create, params: data
       body = JSON.parse(response.body)
-      expect(body).to(eq({'installment' => {'id'=>1, 'name'=>'Fellowship', 'complete'=>false, 'series_id'=>1}}))
+      body['installment'].delete('id')
+      expect(body).to(eq({'installment' => {'name'=>'Fellowship', 'complete'=>false, 'series_id'=>series.id}}))
     end
   end
 
