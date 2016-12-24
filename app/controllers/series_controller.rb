@@ -1,4 +1,5 @@
 class SeriesController < ApplicationController
+  before_filter :authenticate_request!
   before_action :set_series, only: [:destroy]
 
   def index
